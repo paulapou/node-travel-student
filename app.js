@@ -1,14 +1,16 @@
 var appHelper = require("./apphelper.js");
 
 appHelper.runApp(function(app, db) {
-	
 
-	console.log("Travel application is running!");
+  console.log("Travel application is running!");
 
-	var myName = "Paula";
-	app.get("/", function (req, resp) {
-		resp.write("<html><body><h1>Welcome to "+myName+"'s first web app!</body></html>");
-		resp.end();
-	});
+  var myName = "Paula";
 
-})
+  app.get("/rating/:rating", function (req, resp) {
+    var rating = parseInt(req.params.rating)
+    db.findArray({rating: rating }, function (results){ 
+      resp.render("index", {locations: results}); 
+    })
+  })
+});
+   
